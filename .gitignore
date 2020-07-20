@@ -1,0 +1,6 @@
+data.db
+__pycache__/*
+prodjango/*
+*.py.swp
+*.py.swo
+*.py.sw*
