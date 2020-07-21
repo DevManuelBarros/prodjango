@@ -26,14 +26,23 @@ messeges =  {'menu-welcome'          : """
                                                  formatString('Prodjango 1.0v', 'rojo'),
                                                  formatString('dev.manuel.barros@gmail.com', 'rojo')
                                                 ),
+            'open_project'          :"""
+                                        Listado de proyecto disponibles para abrir.
+                                        Seleccione uno por el número de proyecto.
+                                     """,
             }
 
 lines =     {'options'      : formatString('Ingrese la opción deseada -> ', 'blanco', b='violeta'),
               'name_project' : formatString('Ingrese un nombre para el proyecto: -> ', 'blanco', b='violeta'),
               'begin_virtual' : formatString('Estamos generando el entorno virtual', 'verde', b='blanco'),
               'begin_django'  : formatString('Estamos instalando django, tardara un poquito...', 'verde', b='blanco'),
-              'begin_project' : formatString('Estamos creando el proyecto -->  {}', 'verde', b='blanco')
+              'begin_project' : formatString('Estamos creando el proyecto -->  {}', 'verde', b='blanco'),
+              'input_option'  : formatString('Seleccione un proyecto por su ID  --> ', 'blanco', b='violeta'),
               }
+
+styles = {
+            'result' : formatString('{}', 'azul')
+        }
 
 msg_error = {'error_option'         : formatString('La opción deseada no corresponde o no se corresponde, presione una tecla y continue', 'rojo', b='blanco', t='blink'),
              'error_project_exists' : formatString('El nombre de proyecto esta en uso, intente otro.\n', 'rojo', b='blanco', t='blink')

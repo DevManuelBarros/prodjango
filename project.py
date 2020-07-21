@@ -89,6 +89,15 @@ class project():
             return objLite.insert(self.__table_projects, dictProject)
 
 
+    def get_list_proyect(self):
+        objLite = objSqlite(self.__database)
+        result = objLite.selectAll(self.__table_projects, columns='id,name')
+        listProject = []
+        for item in result:
+            listProject.append('Id: {} - Nombre: {}'.format(item[0],item[1]))
+        return listProject
+
+
 
     def __prepare_dict_projects(self):
         tmpDict = self.__projects.copy()

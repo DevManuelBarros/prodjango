@@ -2,7 +2,7 @@
 
 def formatString(text, color, b='negro', t='default'):
     colors = { 
-             'gray'       : '0',
+             'gris'       : '0',
              'rojo'       : '1',
              'verde'      : '2',
              'amarillo'   : '3',
@@ -28,3 +28,4 @@ def formatString(text, color, b='negro', t='default'):
         value = '4' + colors[b]
 
     return '\033[' + style[t] + ';' + value  + ';'  + '3' + colors[color] + 'm' + text + '\033[0m'
+
