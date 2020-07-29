@@ -37,7 +37,7 @@ lines =     {'options'      : formatString('Ingrese la opción deseada -> ', 'bl
               'begin_virtual' : formatString('Estamos generando el entorno virtual', 'verde', b='blanco'),
               'begin_django'  : formatString('Estamos instalando django, tardara un poquito...', 'verde', b='blanco'),
               'begin_project' : formatString('Estamos creando el proyecto -->  {}', 'verde', b='blanco'),
-              'input_option'  : formatString('Seleccione un proyecto por su ID  --> ', 'blanco', b='violeta'),
+              'input_option'  : formatString('Seleccione un proyecto por su ID (la tecla x para salir)  --> ', 'blanco', b='violeta'),
               }
 
 styles = {

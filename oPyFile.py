@@ -61,7 +61,7 @@ class oPyFile:
 
     def readManager(self):
         #open the file.
-        with open(os.path.join(self.__path, self.__file_name), 'r') as file:
+        with open(os.path.join(self.__path, self.__file_name), 'rt') as file:
                 _newline = 0    #valor para comprobar si podemos recorrer normalmente las lineas. o nos encontramos con un dict o list
                 _tmpCad = ''    #si tenemos una list o dict tenemos que ir guardando los valores
                 _tmpKey = ''    #igual que tmpCad.
@@ -93,7 +93,6 @@ class oPyFile:
                         if _newline == 0:
                             _tmpKey = ''
                             _tmpCad= ''
-        file.close()
 
 
 

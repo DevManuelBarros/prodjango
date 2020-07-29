@@ -5,12 +5,23 @@ from datetime import datetime
 
 class project():
     
-    __database = ''
 
-    __term = 'env'
-    __path_projects = 'prodjango/'
-    __name_project = ''
-    __projects  = {
+    # variables para un proyecto abierto
+    __oProject_id   = ''
+    __oProject_name = ''
+    __oPath_project = ''
+    
+
+    # varibales generales
+    __database = ''
+    
+    __term = 'env'                              # terminación de loa entornos virtuales.
+    __path_projects = 'prodjango/'              # path del proyecto. posteriormente realizar carpetas independientes.
+    __name_project = ''                         # nombre del proyecto cuando se esta creando.
+    
+    
+    # datos de la bases de datos a generar según objSqlite
+    __projects  = {                     
                     'id'          : 'ip',
                     'name'        : 'tu',
                     'date_create' : 't',
@@ -25,16 +36,21 @@ class project():
                 'data_create' : 't',
             }
 
+    # cada diccionario tiene una variable asociada.
     __table_projects = 'projects'
     __table_plugins = 'plugins'
     __hb = '#! bin/bash \n'
 
+
+
     def __create_tables(self):
+        ''' Para centralizar la creacion de tablas, llama a la función __create_table '''
         self.__create_table(self.__table_projects, self.__projects)
         self.__create_table(self.__table_plugins, self.__plugins)
         return True
 
     def __create_table(self, table, fields):
+        ''' Función para la creación de tablas en la base datos. '''                
         objLite = objSqlite(self.__database)
         tmpCad = ''
         for k, v in fields.items():
@@ -45,6 +61,7 @@ class project():
         return result
 
     def whichPy(self, program):
+        ''' pequeño script para ver si existe un proceso. '''
         if os.system('which {} > /dev/null'.format(program))==0:
             return True
         else:
@@ -52,27 +69,30 @@ class project():
 
 
     def create_init_install(self):
+        ''' creamos las instanciones iniciales '''
+        # utilizaremos virtualenv para generar el directorio virtual.
         env = 'virtualenv'
-        if(self.whichPy(env)==False):
+        # comprobamos que exista.
+        if(self.whichPy(env)==False):                                   # si no existe virtualenv lo instalamos.
             print('actualizaremos sistema...')
             os.system('sudo apt-get update > /dev/null')
             os.system('sudo apt-get install {} > /dev/null'.format(env))
-        #haremos una ruta.
+        # haremos una ruta.
         print(lines['begin_virtual'])
         rel_path = self.__path_projects + self.__name_project
-        exe = '{} {}/{}{} > /dev/null'.format(env, rel_path, self.__name_project, self.__term)
+        # quedara algo como: virtualenv prodjango/projecto/projectoenv
+        exe = f'{env} {rel_path}/{self.__name_project}{self.__term} > /dev/null' #.format(env, rel_path, self.__name_project, self.__term)
         os.system(exe)
-        code = self.__hb + '. {}{}/{}{}/bin/activate > /dev/null'.format(self.__path_projects,
-                                                self.__name_project,
-                                                self.__name_project,
-                                                self.__term)
+        #__hb cabecera del script. code hará es crear un projectos con los datos indicados.
+        code = self.__hb + f'. {rel_path}/{self.__name_project}{self.__term}/bin/activate > /dev/null'
         code += '\npip install django > /dev/null'
-        code += '\ndjango-admin startproject {} {}/'.format(self.__name_project,                                                            rel_path)
-        print(lines['begin_django'])
+        code += f'\ndjango-admin startproject {self.__name_project} {rel_path}/'
+        print(lines['begin_django']) # avisa que en la proxima linea empieza el script.
         os.system(code)
 
 
     def create_project(self, name_project):
+        ''' funcion desde donde se puede generar el proyecto. '''
         # Primero comprobamos que no exista el proyecto.
         objLite = objSqlite(self.__database)
         result = objLite.selectWhere(self.__table_projects, cond='name=\'{}\''.format(name_project),columns='id')
@@ -91,11 +111,15 @@ class project():
 
     def get_list_proyect(self):
         objLite = objSqlite(self.__database)
-        result = objLite.selectAll(self.__table_projects, columns='id,name')
-        listProject = []
-        for item in result:
-            listProject.append('Id: {} - Nombre: {}'.format(item[0],item[1]))
-        return listProject
+        result = objLite.selectAll(self.__table_projects, columns='id,name,path')
+        return result
+
+
+    def work_project(self, _id, _name, _path):
+        ''' cargamos los datos para abrir el proyecto '''
+        self.__oProject_id   = _id
+        self.__oPath_project = _path
+        self.__oProject_name = _name
 
 
 
@@ -106,7 +130,7 @@ class project():
 
     def __comp_path(self, _dir):
         #_dir = os.path.abspath(os.path.join(_dir))
-        if ~(os.path.isdir(_dir)):
+        if not(os.path.isdir(_dir)):
             try:
                 os.mkdir(_dir)
             except os.error as e:

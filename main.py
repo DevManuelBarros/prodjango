@@ -4,7 +4,7 @@
 import os
 from var import messeges, lines, msg_error, styles
 from project import project
-
+from table import table
 #Datos
 __sqlite     =  'data.db'
 
@@ -26,17 +26,41 @@ def makeProject():
     objP.create_init_install()
 
 
+def work_project(tupla):
+    cls()
+    objP = project(__sqlite)
+    #tupla esta armado por 0=id, 1=name 2=path
+    objP.work_project(tupla[0], tupla[1], tupla[2])
+    
 
 def openProject():
     cls()
     print(messeges['open_project'])
     objP = project(__sqlite)
     result = objP.get_list_proyect()
-    for i in result:
-        print(styles['result'].format(i))
-    result = input(lines['input_option'])
+    selectTrue= False
+    data_project = ''
+    while not(selectTrue):
+        headers = ('ID','NOMBRE', 'RUTA')
+        tab = table(len(headers))
+        tab.setMaxWidth(30)
+        tab.setHeaders(headers)
+        tab.setBody(result)
+        tab.print_table()
+        #for i in result:
+        #    print(styles['result'].format(i))
+        select_project = input(lines['input_option'])
+        if select_project.isnumeric():
+            select_project = int(select_project)
+            for tupla in result:
+                if select_project == tupla[0]:
+                    selectTrue = True
+                    objP = None
+                    work_projec(tupla)
+        else:
+            print('Ingrese un valor valido, un ID')
     
-
+    input('Salio')
 
 def main():
     _continue = True
