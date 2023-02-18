@@ -9,10 +9,10 @@ messeges =  {'menu-welcome'          : """
                                        {}
                                        {}
                                        {}
-                                        """.format(formatString('Bienvenido a Prodjango 1.0v', 'rojo', b='blanco', t='blink'),
-                                                   formatString('1. Crear Proyecto Django', 'amarillo'),
-                                                   formatString('2. Abrir Proyecto Django', 'azul'),
-                                                   formatString('3. Salir', 'rojo')
+                                        """.format(formatString('Bienvenido a Prodjango 1.0v', 'blanco', t='blink'),
+                                                   formatString('1. Crear Proyecto Django', 'blanco', t='negrita'),
+                                                   formatString('2. Abrir Proyecto Django', 'blanco', t='negrita'),
+                                                   formatString('3. Salir', 'rojo', t='negrita')
                                                    ),
             
             'exit'                  : """
@@ -32,12 +32,13 @@ messeges =  {'menu-welcome'          : """
                                      """,
             }
 
-lines =     {'options'      : formatString('Ingrese la opción deseada -> ', 'blanco', b='violeta'),
-              'name_project' : formatString('Ingrese un nombre para el proyecto: -> ', 'blanco', b='violeta'),
-              'begin_virtual' : formatString('Estamos generando el entorno virtual', 'verde', b='blanco'),
-              'begin_django'  : formatString('Estamos instalando django, tardara un poquito...', 'verde', b='blanco'),
-              'begin_project' : formatString('Estamos creando el proyecto -->  {}', 'verde', b='blanco'),
-              'input_option'  : formatString('Seleccione un proyecto por su ID (la tecla x para salir)  --> ', 'blanco', b='violeta'),
+lines =     {'options'      : formatString('Ingrese la opción deseada -> ', 'blanco', t='negrita'),
+              'name_project' : formatString('Ingrese un nombre para el proyecto: -> ', 'blanco', t='negrita'),
+              'begin_virtual' : formatString('Estamos generando el entorno virtual', 'blanco', t='negrita'),
+              'begin_django'  : formatString('Estamos instalando django, tardara un poquito...', 'blanco', t='negrita'),
+              'begin_project' : formatString('Estamos creando el proyecto -->  {}', 'blanco', t='negrita'),
+              'input_option'  : formatString('Seleccione un proyecto por su ID (la tecla x para salir)  --> ', 'blanco', t='negrita'),
+              'process_finish' : formatString('Se ha completado la creación del proyecto {}, pulse enter para continuar', 'blanco', t='negrita'),
               }
 
 styles = {

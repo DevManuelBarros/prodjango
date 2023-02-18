@@ -40,6 +40,7 @@ class project():
     __table_projects = 'projects'
     __table_plugins = 'plugins'
     __hb = '#! bin/bash \n'
+    __silent = True
 
 
 
@@ -69,26 +70,32 @@ class project():
 
 
     def create_init_install(self):
+        dev_null = ""
+        if self.__silent:
+            dev_null = "> /dev/null"
         ''' creamos las instanciones iniciales '''
         # utilizaremos virtualenv para generar el directorio virtual.
-        env = 'virtualenv'
+        #env = 'virtualenv'
         # comprobamos que exista.
-        if(self.whichPy(env)==False):                                   # si no existe virtualenv lo instalamos.
-            print('actualizaremos sistema...')
-            os.system('sudo apt-get update > /dev/null')
-            os.system('sudo apt-get install {} > /dev/null'.format(env))
+        #if(self.whichPy(env)==False):                                   # si no existe virtualenv lo instalamos.
+        #    print('actualizaremos sistema...')
+        #    os.system('sudo apt-get update > /dev/null')
+        #    os.system('sudo apt-get install {} > /dev/null'.format(env))
         # haremos una ruta.
         print(lines['begin_virtual'])
         rel_path = self.__path_projects + self.__name_project
         # quedara algo como: virtualenv prodjango/projecto/projectoenv
-        exe = f'{env} {rel_path}/{self.__name_project}{self.__term} > /dev/null' #.format(env, rel_path, self.__name_project, self.__term)
+        #exe = f'{env} {rel_path}/{self.__name_project}{self.__term} > /dev/null' #.format(env, rel_path, self.__name_project, self.__term)
+        exe = f'python -m venv {rel_path}/{self.__name_project}{self.__term} {dev_null}'
         os.system(exe)
         #__hb cabecera del script. code hará es crear un projectos con los datos indicados.
-        code = self.__hb + f'. {rel_path}/{self.__name_project}{self.__term}/bin/activate > /dev/null'
-        code += '\npip install django > /dev/null'
-        code += f'\ndjango-admin startproject {self.__name_project} {rel_path}/'
+        code = self.__hb + f'. {rel_path}/{self.__name_project}{self.__term}/bin/activate {dev_null}'
+        code += f'\n pip install --upgrade pip {dev_null}' 
+        code += f'\npip install django {dev_null}'
+        code += f'\ndjango-admin startproject {self.__name_project} {rel_path} {dev_null}'
         print(lines['begin_django']) # avisa que en la proxima linea empieza el script.
         os.system(code)
+        input(lines['process_finish'].format(self.__name_project))
 
 
     def create_project(self, name_project):

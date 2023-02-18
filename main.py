@@ -56,7 +56,7 @@ def openProject():
                 if select_project == tupla[0]:
                     selectTrue = True
                     objP = None
-                    work_projec(tupla)
+                    work_project(tupla)
         else:
             print('Ingrese un valor valido, un ID')
     
